@@ -1,1 +1,20 @@
 /* You can add global styles to this file, and also import other style files */
+@import url("./assets/styles/utilities.scss");
+@import url("./assets/styles/components.scss");
+
+body {
+  overflow: hidden;
+  background-image: radial-gradient(#fff, #fff, #eee);
+}
+
+.header-nav {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  background-size: cover;
+  overflow: hidden;
+  background-image: url("../../assets/images/nav-bg.svg"),
+    linear-gradient(to top right, #00ae99, #00aeae);
+}

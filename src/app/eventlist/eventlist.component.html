@@ -1,0 +1,74 @@
+<nav class="{{isList ? '' : 'grid'}}">
+	<div class="header-nav">
+		<div class="header d-flex justify-content-between align-items-center">
+			<a class="logo" href="/">
+				<img class="logo" src="../assets/images/logo.png" />
+				<h1>Bambi</h1>
+			</a>
+			<div class="d-flex justify-content-between align-items-center">
+				<input class="search search-input" placeholder="search" />
+				<a href="./admin-login.html" class="btn white anim">Admin</a>
+			</div>
+		</div>
+		<div class="middle">
+			<input class="search w-100 search-input" placeholder="search" />
+		</div>
+		<div class="bottom d-flex justify-content-between align-items-center">
+			<h2>
+				EVENTS
+			</h2>
+			<div class="arrange d-flex justify-content-between align-items-center">
+				<img (click)="isList=false" class="grid-toggle" src="../../assets/images/grid-icon.svg" />
+				<img (click)="isList=true" class="list-toggle" src="../../assets/images/list-icon.svg" />
+			</div>
+		</div>
+	</div>
+</nav>
+<main class="{{isList ? '' : 'grid'}}">
+	<div class="item-block {{ events ? '' : 'gone'}}">
+		<div class="item-con">
+			<div *ngFor="let item of events" (click)="viewDetail(item.id)" class="item w-100 {{isItemSpecial(item.event_types) ? 'special' : ''}}">
+				<a class="list-item" [routerLink]="['/events', item.id]">
+					<div class="date">
+						<p>{{ item.start_date | date: 'dd'}}</p>
+						<p>{{ item.start_date | date: 'MMM' }}</p>
+					</div>
+					<div class="content">
+						<div class="main">
+							<h5 class="title">{{item.name}}</h5>
+							<p class="location">{{item.location}}</p>
+						</div>
+						<div class="meta">
+							<p class="event-types" [innerHTML]="formatEventTypes(item.event_types, true)">
+							</p>
+						</div>
+					</div>
+				</a>
+				<a class="grid-item" [routerLink]="['/events', item.id]">
+					<div class="content">
+						<div class="main">
+							<h5 class="title">{{item.name}}</h5>
+							<p class="location">{{item.location}}</p>
+						</div>
+
+						<div class="date">
+							<p>{{ item.start_date | date: 'dd'}}, {{ item.start_date | date: 'MMM'}} {{ item.start_date | date: 'yyyy'}}</p>
+						</div>
+					</div>
+					<div class="meta">
+						<p class="event-types" [innerHTML]="formatEventTypes(item.event_types)">
+						</p>
+					</div>
+				</a>
+			</div>
+		</div>
+	</div>
+
+	<div class="loader-con flex-grow d-flex justify-content-center align-items-center {{ !events ? '' : 'gone'}}">
+		<div class="loader"></div>
+	</div>
+	<div
+		class="server-message-con flex-grow d-flex justify-content-center align-items-center {{events.length > 0 ? 'gone' : ''}}">
+		<div class="server-message"></div>
+	</div>
+</main>
