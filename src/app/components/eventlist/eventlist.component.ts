@@ -1,28 +1,38 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
-import { EventService } from '../event.service';
-import { IEvt, IResp } from '../models.interface';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { EventService } from '../../event.service';
 
 @Component({
   selector: 'app-eventlist',
   templateUrl: './eventlist.component.html',
   styleUrls: ['./eventlist.component.scss']
 })
-export class EventlistComponent implements OnInit {
-  isList = true
+export class EventlistComponent implements OnInit, OnChanges {
+  @Input() isList = true
   errorMsg = ''
-  events:any[] = []
+  @Input() searchQuery = ''
+  events: any[] | undefined
   sub!: Subscription;
 
   constructor(private eventService: EventService) {
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if(changes?.['searchQuery']?.currentValue){
+      this.events = undefined
+      this.getEvents(this.searchQuery)
+    } else this.getEvents()
+  }
+
   ngOnInit(): void {
-    this.sub = this.eventService.getEvents().subscribe({
+    this.getEvents()
+  }
+
+  getEvents(q: string = '') {
+    this.sub = this.eventService.getEvents(q).subscribe({
       next: events => this.events = events.data,
       error: err => this.errorMsg = err
     })
-    console.log(this.events)
   }
 
   ngOnDestroy() {
@@ -32,7 +42,7 @@ export class EventlistComponent implements OnInit {
   formatEventTypes(eventTypes: { id: number, name: string }[] | null, isList: boolean = false) {
     if (!eventTypes) return [""]
     let evtTypes = eventTypes.map(val => {
-      if([
+      if ([
         "Leap",
         "Recruiting Mission",
         "Hackathon",
@@ -44,7 +54,7 @@ export class EventlistComponent implements OnInit {
   }
 
   isItemSpecial(items: { id: number, name: string }[] | null) {
-    if(!items) return false;
+    if (!items) return false;
     return !items.every(itm => ![
       "Leap",
       "Recruiting Mission",

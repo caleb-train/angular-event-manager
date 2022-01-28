@@ -1,5 +1,11 @@
 export interface IResp<T> {
 	data: T;
+	message?: string,
+	status: number;
+}
+
+export interface IError {
+	error: string,
 	status: number;
 }
 
@@ -19,4 +25,14 @@ export interface IEvt {
 		id: number;
 		name: string;
 	}[]
+}
+
+export interface ILogin {
+	username: string,
+	password: string
+}
+
+export interface IAuth {
+	token: string,
+	username: string
 }

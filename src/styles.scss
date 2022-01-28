@@ -7,6 +7,11 @@ body {
   background-image: radial-gradient(#fff, #fff, #eee);
 }
 
+.ng-invalid:not(form).ng-touched,
+.field-error {
+  border: 1px solid red;
+}
+
 .header-nav {
   display: flex;
   width: 100%;
@@ -15,6 +20,6 @@ body {
   padding: 1rem 1.5rem;
   background-size: cover;
   overflow: hidden;
-  background-image: url("../../assets/images/nav-bg.svg"),
+  background-image: url("./assets/images/nav-bg.svg"),
     linear-gradient(to top right, #00ae99, #00aeae);
 }
