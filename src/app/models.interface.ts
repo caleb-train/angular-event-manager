@@ -27,6 +27,21 @@ export interface IEvt {
 	}[]
 }
 
+export interface IEvtTypes {
+	id: number;
+	name: string;
+	created_at: string;
+	admin_id: string;
+}
+
+export interface INewEvt {
+	name: string,
+	location: string,
+	start_date: string,
+	end_date: string,
+	description: string,
+}
+
 export interface ILogin {
 	username: string,
 	password: string

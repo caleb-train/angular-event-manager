@@ -1,0 +1,57 @@
+<nav class="event-nav d-block w-100">
+	<div class="header-nav admin">
+		<div class="header w-100 mx-auto d-flex justify-content-between align-items-center">
+			<app-logo></app-logo>
+			<div class="d-flex justify-content-between align-items-center">
+				<button id="new-event" class="btn white anim">New Event Type</button>
+				<div id="navicon" class="pointer"></div>
+			</div>
+		</div>
+		<div class="bottom mx-auto w-100 d-flex justify-content-between align-items-center">
+			<h2>
+				EVENT TYPES
+			</h2>
+		</div>
+	</div>
+</nav>
+<main class="">
+	<div class="item-block" [class.gone]="!eventTypes">
+		<div class="item-con">
+			<div *ngFor="let item of eventTypes" class="item w-100">
+				<div class="grid-item">
+					<h5 class="title">{{item.name}}</h5>
+					<div
+						*ngIf='!["MeetUp","Leap","Recruiting Mission","Hackathon","Premium-only Webinar","Open Webinar"].includes(item.name)'
+						class="remove-icon">&times;</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<div class="loader-con flex-grow d-flex justify-content-center align-items-center"
+		[class.gone]="eventTypes != undefined">
+		<div class="loader"></div>
+	</div>
+	<div *ngIf="eventTypes"
+		class="server-message-con flex-grow d-flex justify-content-center align-items-center {{eventTypes.length > 0 ? 'gone' : ''}}">
+		<div class="server-message"></div>
+	</div>
+</main>
+<div id="modal" class="close">
+	<div id="modal-bg"></div>
+	<div id="modal-dialog" class="w-100">
+		<div class="modal-close-btn close-icon pointer">&timesd;</div>
+		<form class="d-flex modal-event-type flex-column align-items-center w-100 mx-auto static">
+			<h1>NEW EVENT TYPE</h1>
+			<div class="form-group w-100">
+				<input type="text" name="name" style="width: 100%;" placeholder="name" />
+			</div>
+			<div class="w-100 req-res d-flex justify-content-center align-items-center flex-column">
+				<button type="submit" class="submit btn green-bg border-none anim ">save</button>
+				<div class="loader"></div>
+				<div class="error-hd"></div>
+			</div>
+		</form>
+	</div>
+</div>

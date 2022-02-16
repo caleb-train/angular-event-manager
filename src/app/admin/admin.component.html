@@ -1,0 +1,17 @@
+<aside id="app-drawer" [class.close]="!isAppDrawerOpen">
+	<div id="aside-backdrop"></div>
+	<div class="app-con">
+		<div class="back-arrows"></div>
+		<div id="links">
+			<a [routerLink]="['/admin/events']" class="link" [class.active]="activeRoute == 'events'">EVENTS</a>
+			<a [routerLink]="['/admin/event-types']" class="link" [class.active]="activeRoute == 'event-types'">EVENTS
+				TYPES</a>
+			<a [routerLink]="['/admin/registrations']" class="link"
+				[class.active]="activeRoute == 'registrations'">REGISTRATIONS</a>
+			<a onclick="window.localStorage.clear()" [routerLink]="['/']" class="link">LOG OUT</a>
+		</div>
+	</div>
+</aside>
+<div class="d-flex flex-grow flex-column main-con">
+	<router-outlet></router-outlet>
+</div>

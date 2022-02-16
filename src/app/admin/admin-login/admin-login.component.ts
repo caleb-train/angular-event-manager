@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { EventService } from '../event.service';
-import { IAuth, ILogin } from '../models.interface';
+import { Router } from '@angular/router';
+import { EventService } from '../../event.service';
+import { ILogin } from '../../models.interface';
 
 @Component({
   selector: 'app-admin-login',
@@ -16,10 +17,10 @@ export class AdminLoginComponent implements OnInit {
   }
 
   loginData: ILogin = { ...this.originalLoginData };
-  auth: IAuth | undefined;
   errorMsg: any
+  loading: boolean = false;
 
-  constructor(private eventService: EventService) { }
+  constructor(private eventService: EventService, private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -28,11 +29,20 @@ export class AdminLoginComponent implements OnInit {
 
   }
   onSubmit(form: NgForm) {
+    this.loading = true;
     const sub = this.eventService.adminLogin(this.loginData).subscribe({
-      next: auth => this.auth = auth.data,
+      next: auth => {
+        this.loading = false
+        this.errorMsg = null
+        this.eventService.saveUser(auth.data)
+        console.log('asas')
+        this.router.navigate(['/admin/events'])
+      },
       error: err => {
-        console.log('error', err)
-      }
+        console.log('error', err?.error)
+        this.errorMsg = err?.error?.error
+        this.loading = false
+      },
     });
   }
 }
