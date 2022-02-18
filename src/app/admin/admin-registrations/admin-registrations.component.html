@@ -1,0 +1,55 @@
+<nav class="event-nav d-block w-100">
+	<div class="header-nav admin">
+		<div class="header w-100 mx-auto d-flex justify-content-between align-items-center">
+			<app-logo></app-logo>
+			<div class="d-flex justify-content-between align-items-center">
+				<input [ngModel]="searchQuery" (ngModelChange)="OnChanges($event)" name="search" class="search search-input" placeholder="search" />
+				<div id="navicon" class="pointer"></div>
+			</div>
+		</div>
+		<div class="middle d-inline-block w-100 mx-auto">
+			<input [(ngModel)]="searchQuery" name="search" class="search w-100 search-input" placeholder="search" />
+		</div>
+		<div class="bottom mx-auto w-100 d-flex justify-content-between align-items-center">
+			<h2>
+				REGISTRATIONS
+			</h2>
+		</div>
+	</div>
+</nav>
+<main class="">
+	<div class="item-block" [class.gone]="!registrations">
+		<div class="item-con">
+			<div *ngFor="let item of registrations" class="item w-100">
+				<div class="list-item">
+					<div class="date">
+						<p>{{item.start_date | date: 'dd'}}</p>
+						<p>{{ item.start_date | date: 'MMM' }}</p>
+					</div>
+					<div class="content">
+						<div class="main">
+							<h5 class="title">{{item.email}}</h5>
+							<p class="location">{{item.event_name}}</p>
+						</div>
+						<div class="meta d-flex align-items-center">
+							<span *ngIf="item.notified">notified</span>
+							<button *ngIf="!item.notified" class="btn green anim notify-btn" data-id="item.id" class="notify">
+								notify
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<div class="loader-con flex-grow d-flex justify-content-center align-items-center"
+		[class.gone]="registrations != undefined">
+		<div class="loader"></div>
+	</div>
+	<div *ngIf="registrations"
+		class="server-message-con flex-grow d-flex justify-content-center align-items-center {{registrations.length > 0 ? 'gone' : ''}}">
+		<div class="server-message"></div>
+	</div>
+</main>

@@ -1,0 +1,77 @@
+/* ---------------nav CSS---------------- */
+:host {
+  height: 100%;
+  flex-direction: column;
+  display: flex;
+  width: 100%;
+}
+
+nav .header .search {
+  display: none;
+}
+h2 {
+  color: #fff;
+}
+nav .header .search {
+  margin-right: 1rem;
+}
+nav .btn {
+  font-size: 0.85rem;
+}
+
+/* ------------modal CSS ------------ */
+#modal #modal-dialog {
+  max-width: 716px;
+  height: 650px;
+}
+#modal-dialog form {
+  padding: 20px;
+}
+#modal-dialog form .form-group > input,
+#modal-dialog form .form-group > label,
+#modal-dialog form textarea {
+  margin-bottom: 25px;
+  width: 100%;
+}
+#modal-dialog form textarea {
+  text-align: left;
+  resize: none;
+}
+#modal-dialog h1 {
+  font-size: 1.5rem;
+  color: var(--green);
+  margin-bottom: 40px;
+}
+
+@media (min-width: 576px) {
+  #modal-dialog form .form-group {
+    flex-direction: row;
+  }
+  #modal-dialog form .form-group label {
+    width: 48%;
+  }
+  #modal-dialog form .form-group > input {
+    width: 48%;
+  }
+  #modal-dialog form textarea {
+    height: 230px;
+  }
+}
+
+@media (min-width: 768px) {
+  nav .bottom h2 {
+    font-size: 2rem;
+  }
+}
+
+@media (min-width: 992px) {
+  nav .middle {
+    display: none;
+  }
+  nav .header .search {
+    display: inline-block;
+  }
+  nav .header-nav {
+    height: 180px;
+  }
+}

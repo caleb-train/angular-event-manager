@@ -1,1 +1,95 @@
 /* You can add global styles to this file, and also import other style files */
+@import url("./assets/styles/utilities.scss");
+@import url("./assets/styles/components.scss");
+
+body {
+  overflow: hidden;
+  background-image: radial-gradient(#fff, #fff, #eee);
+}
+
+.ng-invalid:not(form).ng-touched,
+.field-error {
+  border: 1px solid red;
+}
+
+.header-nav {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  background-size: cover;
+  overflow: hidden;
+  background-image: url("./assets/images/nav-bg.svg"),
+    linear-gradient(to top right, #00ae99, #00aeae);
+  &.admin {
+    background-image: url("./assets/images/nav-bg.svg"),
+      linear-gradient(to top right, #0c7777, #066666);
+  }
+}
+nav.event-nav {
+  width: 100%;
+  display: block;
+
+  .header-nav {
+    height: 220px;
+  }
+  .header .search {
+    display: none;
+    margin-right: 1rem;
+  }
+  .header {
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+  }
+  .bottom .arrange img {
+    margin-left: 2rem;
+    width: 1.8rem;
+    cursor: pointer;
+    opacity: 0.5;
+  }
+  .bottom .arrange img:nth-child(2) {
+    opacity: 1;
+  }
+  &.grid .bottom .arrange img:nth-child(2) {
+    opacity: 0.5;
+  }
+  &.grid .bottom .arrange img:first-child {
+    opacity: 1;
+  }
+  .bottom h2 {
+    color: #fff;
+    margin: 0;
+  }
+  .bottom {
+    max-width: 1000px;
+    width: 100%;
+    margin: 0 auto;
+  }
+  .middle {
+    display: inline-block;
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+  }
+  .btn {
+    /* margin: 0 1rem; */
+    padding: 0.5rem 1.4rem;
+    cursor: pointer;
+  }
+  @media (min-width: 768px) {
+    .header .search {
+      display: inline-block;
+    }
+    .middle {
+      display: none;
+    }
+    .header-nav {
+      height: 180px;
+    }
+    .bottom h2 {
+      font-size: 2rem;
+    }
+  }
+}

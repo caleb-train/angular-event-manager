@@ -1,0 +1,65 @@
+<nav>
+	<div class="header-nav">
+		<div class="header d-flex justify-content-between align-items-center">
+			<app-logo></app-logo>
+			<div class="date-con d-flex justify-content-between align-items-center">
+				<div class="date">{{ event?.start_date | date: 'dd MMM yyyy'}}</div>
+			</div>
+		</div>
+		<div class="middle">
+			<h1>{{event?.name}}</h1>
+			<h5>{{event?.location}}</h5>
+		</div>
+		<div class="bottom d-flex justify-content-center align-items-center">
+			<button id="register" class="btn white anim">Register</button>
+		</div>
+	</div>
+</nav>
+<main>
+	<div class="item-block  {{ !event ? 'gone': ''}}">
+		<div class="item-con">
+			<p>{{event?.description}}</p>
+			<div class="event-types">
+				{{getEventTypes()}}
+			</div>
+			<div class="speakers">
+				<h3>Speakers</h3>
+				<div class="speaker-list">
+					<div class="speaker" *ngFor="let item of event?.speakers">
+						<div class="dp" style="background-size: cover; background-image: url({{item.pic}})"></div>
+						<div class="details">
+							<h6>{{item.name}}</h6>
+							<span>{{item.desc}}</span>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<div class="loader-con flex-grow d-flex justify-content-center align-items-center {{ event ? 'gone': ''}}">
+		<div class="loader"></div>
+	</div>
+</main>
+<div id="modal" class="close">
+	<div id="modal-bg"></div>
+	<div id="modal-dialog">
+		<div class="modal-close-btn close-icon pointer">&timesd;</div>
+		<form class="modal-register">
+			<h1>REGISTER</h1>
+			<input type="text" name="name" placeholder="name" />
+			<input type="text" name="email" placeholder="email" />
+			<div class="w-100 req-res d-flex justify-content-center align-items-center flex-column">
+				<button type="submit" class="submit btn green-bg border-none anim ">register</button>
+				<div class="loader"></div>
+				<div class="error-hd"></div>
+			</div>
+		</form>
+		<form class="modal-premium text-center gone">
+			<img width="120px" src="../../assets/images/warning.svg" />
+			<h1>Premium-only webinar registration is available to only members</h1>
+			<a href="/premium-membership.html" class="btn green-bg border-none anim">Read more</a>
+		</form>
+	</div>
+</div>

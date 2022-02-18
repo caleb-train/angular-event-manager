@@ -1,0 +1,57 @@
+<nav class="event-nav d-block w-100 {{isList ? '' : 'grid'}}">
+	<div class="header-nav admin">
+		<div class="header w-100 mx-auto d-flex justify-content-between align-items-center">
+			<app-logo></app-logo>
+			<div class="d-flex justify-content-between align-items-center">
+				<input [(ngModel)]="searchQuery" name="search" class="search search-input" placeholder="search" />
+				<button (click)="openModal = true" id="new-event" class="btn white anim">New Event</button>
+				<div id="navicon" class="pointer"></div>
+			</div>
+		</div>
+		<div class="middle d-inline-block w-100 mx-auto">
+			<input [(ngModel)]="searchQuery" name="search" class="search w-100 search-input" placeholder="search" />
+		</div>
+		<div class="bottom mx-auto w-100 d-flex justify-content-between align-items-center">
+			<h2>
+				EVENTS
+			</h2>
+			<div class="arrange d-flex justify-content-between align-items-center">
+				<img (click)="isList=false" class="grid-toggle" src="../../assets/images/grid-icon.svg" />
+				<img (click)="isList=true" class="list-toggle" src="../../assets/images/list-icon.svg" />
+			</div>
+		</div>
+	</div>
+</nav>
+<app-eventlist [isList]="isList" [searchQuery]="searchQuery"></app-eventlist>
+<div id="modal" [class.close]="!openModal">
+	<div id="modal-bg" (click)="openModal = false"></div>
+	<div id="modal-dialog" class="w-100">
+		<div class="modal-close-btn close-icon pointer" (click)="openModal = false">&timesd;</div>
+		<form autocomplete="off" #form="ngForm" (ngSubmit)="onSubmit(form)"
+			class="d-flex modal-event flex-column align-items-center w-100 mx-auto static">
+			<h1>NEW EVENT</h1>
+			<div class="w-100 form-group flex-column d-flex justify-content-between">
+				<input type="text" [(ngModel)]="eventData.name" name="name" placeholder="name" required #name="ngModel"
+					[class.field-error]="form.submitted && name.invalid" />
+
+				<input type="text" name="location" [(ngModel)]="eventData.location" placeholder="location" #name="ngModel"
+					[class.field-error]="form.submitted && name.invalid" />
+			</div>
+			<div class="w-100 form-group flex-column d-flex justify-content-between">
+				<label class="text-left" for="start-date"> Start Date
+					<input class="w-100" [(ngModel)]="eventData.start_date" name="start_date" id="start-date" type="date"
+						placeholder="start_date" /></label>
+				<label class="text-left" for="end-date"> End Date<input [(ngModel)]="eventData.end_date" id="end-date"
+						class="w-100" name="end_date" type="date" placeholder="end_date" /></label>
+
+			</div>
+			<textarea maxlength="600" name="description" placeholder="description" [(ngModel)]="eventData.description"
+				class="w-100" rows="3"></textarea>
+			<div class="w-100 req-res d-flex justify-content-center align-items-center flex-column">
+				<button type="submit" class="submit btn green-bg border-none anim ">save</button>
+				<div class="loader"></div>
+				<div class="error-hd"></div>
+			</div>
+		</form>
+	</div>
+</div>

@@ -1,0 +1,24 @@
+<nav class="event-nav {{isList ? '' : 'grid'}}">
+	<div class="header-nav">
+		<div class="header d-flex justify-content-between align-items-center">
+			<app-logo></app-logo>
+			<div class="d-flex justify-content-between align-items-center">
+				<input [(ngModel)]="searchQuery" class="search search-input" placeholder="search" />
+				<a href="/admin-login" class="btn white anim">Admin</a>
+			</div>
+		</div>
+		<div class="middle">
+			<input [(ngModel)]="searchQuery" class="search w-100 search-input" placeholder="search" />
+		</div>
+		<div class="bottom d-flex justify-content-between align-items-center">
+			<h2>
+				EVENTS
+			</h2>
+			<div class="arrange d-flex justify-content-between align-items-center">
+				<img (click)="isList=false" class="grid-toggle" src="../../assets/images/grid-icon.svg" />
+				<img (click)="isList=true" class="list-toggle" src="../../assets/images/list-icon.svg" />
+			</div>
+		</div>
+	</div>
+</nav>
+<app-eventlist [isList]="isList" [searchQuery]="searchQuery"></app-eventlist>

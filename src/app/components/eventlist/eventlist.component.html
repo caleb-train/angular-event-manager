@@ -1,0 +1,51 @@
+<main class="{{isList ? '' : 'grid'}}">
+	<div class="item-block {{ events ? '' : 'gone'}}">
+		<div class="item-con">
+			<div *ngFor="let item of events" (click)="viewDetail(item.id)"
+				class="item w-100 {{isItemSpecial(item.event_types) ? 'special' : ''}}">
+				<a class="list-item" [routerLink]="['/events', item.id]">
+					<div class="date">
+						<p>{{ item.start_date | date: 'dd'}}</p>
+						<p>{{ item.start_date | date: 'MMM' }}</p>
+					</div>
+					<div class="content">
+						<div class="main">
+							<h5 class="title">{{item.name}}</h5>
+							<p class="location">{{item.location}}</p>
+						</div>
+						<div class="meta">
+							<p class="event-types" [innerHTML]="formatEventTypes(item.event_types, true)">
+							</p>
+						</div>
+					</div>
+				</a>
+				<a class="grid-item" [routerLink]="['/events', item.id]">
+					<div class="content">
+						<div class="main">
+							<h5 class="title">{{item.name}}</h5>
+							<p class="location">{{item.location}}</p>
+						</div>
+
+						<div class="date">
+							<p>{{ item.start_date | date: 'dd'}}, {{ item.start_date | date: 'MMM'}} {{ item.start_date | date:
+								'yyyy'}}</p>
+						</div>
+					</div>
+					<div class="meta">
+						<p class="event-types" [innerHTML]="formatEventTypes(item.event_types)">
+						</p>
+					</div>
+				</a>
+			</div>
+		</div>
+	</div>
+
+	<div
+		class="loader-con flex-grow d-flex justify-content-center align-items-center {{ events == undefined ? '' : 'gone'}}">
+		<div class="loader"></div>
+	</div>
+	<div *ngIf="events"
+		class="server-message-con flex-grow d-flex justify-content-center align-items-center {{events.length > 0 ? 'gone' : ''}}">
+		<div class="server-message"></div>
+	</div>
+</main>

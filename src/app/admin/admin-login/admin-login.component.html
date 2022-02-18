@@ -1,0 +1,21 @@
+<nav>
+	<app-logo theme="light"></app-logo>
+</nav>
+<main>
+	<form autocomplete="off" #form="ngForm" (ngSubmit)="onSubmit(form)" class="modal-login">
+		<h1>LOG IN</h1>
+		<input required minlength="3" type="text" [(ngModel)]="loginData.username" name="username"
+			[class.field-error]="form.submitted && username.invalid" placeholder="username" #username="ngModel" />
+		<p *ngIf="username.invalid && username.touched || form.submitted && username.invalid">username must be at least 3
+			letters</p>
+		<input required minlength="5" [class.field-error]="form.submitted && password.invalid" type="password"
+			[(ngModel)]="loginData.password" name="password" placeholder="password" #password="ngModel" />
+		<p *ngIf="password.invalid && password.touched || form.submitted && password.invalid">password must be at least 5
+			characters</p>
+		<div class="w-100 req-res d-flex justify-content-center align-items-center flex-column {{loading ? 'async' : ''}}">
+			<button type="submit" class="submit btn green-bg border-none anim">submit</button>
+			<div class="loader"></div>
+			<div *ngIf="errorMsg && !loading" class="error-hd">{{errorMsg}}</div>
+		</div>
+	</form>
+</main>

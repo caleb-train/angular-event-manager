@@ -1,0 +1,85 @@
+:host {
+  height: 100%;
+  flex-direction: column;
+  display: flex;
+  width: 100%;
+  background: #fff;
+}
+nav {
+  height: 75px;
+  width: 100%;
+  padding: 1rem 1.5rem;
+}
+main {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+main form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  background: #fff;
+  max-width: 350px;
+  margin-bottom: 200px;
+  padding: 20px;
+  height: 350px;
+  button {
+    margin-top: 20px;
+  }
+  p {
+    text-align: left;
+    width: 100%;
+    margin-top: 5px;
+    font-size: 12px;
+  }
+}
+main form input {
+  margin-top: 20px;
+  width: 100%;
+}
+main h1 {
+  font-size: 2rem;
+  color: var(--green);
+  margin-bottom: 20px;
+}
+
+main .req-res.async .loader {
+  display: block;
+}
+
+main .req-res .loader {
+  display: none;
+}
+
+main .req-res.async button,
+main .req-res.async .error-hd {
+  display: none;
+}
+
+main .req-res .error-hd {
+  text-align: center;
+  font-size: 0.85rem;
+  max-width: 400px;
+}
+
+@media (min-width: 576px) {
+}
+
+@media (min-width: 768px) {
+  main form {
+    box-shadow: 0 0 15px 1px #ccc;
+    border-radius: 7px;
+    margin-bottom: 150px;
+  }
+}
+
+@media (min-width: 992px) {
+}
+
+@media (min-width: 1200px) {
+}
