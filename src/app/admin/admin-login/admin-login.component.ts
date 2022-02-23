@@ -34,8 +34,6 @@ export class AdminLoginComponent implements OnInit {
       next: auth => {
         this.loading = false
         this.errorMsg = null
-        this.eventService.saveUser(auth.data)
-        console.log('asas')
         this.router.navigate(['/admin/events'])
       },
       error: err => {

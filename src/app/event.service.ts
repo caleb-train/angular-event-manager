@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, tap, throwError } from 'rxjs';
-import { IAuth, IEvt, IEvtTypes, ILogin, IResp } from './models.interface';
+import { IAuth, IEvt, IEvtTypes, ILogin, INewEvt, IResp } from './models.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +20,7 @@ export class EventService {
   }
 
   getRegistrations(q: string = ''): Observable<IResp<IEvt[]>> {
-    return this.http.get<IResp<IEvt[]>>(`${this.eventService}/api/event/registration${q ? `?email=${q}` : ''}`).pipe(tap(data => console.log('All', JSON.stringify(data))), catchError(this.handleError))
+    return this.http.get<IResp<IEvt[]>>(`${this.eventService}/api/event/registration${q ? `?email=${q}` : ''}`).pipe(tap(data => data), catchError(this.handleError))
   }
 
   getEventTypes(q: string) {
@@ -29,11 +29,20 @@ export class EventService {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${this.currentUser?.token}`,
       }
-    }).pipe(tap(data => console.log('All', JSON.stringify(data))), catchError(this.handleError))
+    }).pipe(tap(), catchError(this.handleError))
   }
 
   adminLogin(loginData: ILogin): Observable<IResp<IAuth>> {
     return this.http.post<IResp<IAuth>>(`${this.eventService}/api/auth/login`, loginData, { headers: { "Content-Type": "application/json" }, }).pipe(tap(data => this.saveUser(data.data)))
+  }
+
+  createEvent(evtData: INewEvt): Observable<IResp<any>> {
+    return this.http.post<IResp<IAuth>>(`${this.eventService}/api/events`, evtData, {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${this.currentUser?.token}`,
+      },
+    })
   }
 
   getEvent(id: number): Observable<IResp<IEvt>> {

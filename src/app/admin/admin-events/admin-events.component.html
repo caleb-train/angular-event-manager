@@ -31,26 +31,45 @@
 			class="d-flex modal-event flex-column align-items-center w-100 mx-auto static">
 			<h1>NEW EVENT</h1>
 			<div class="w-100 form-group flex-column d-flex justify-content-between">
-				<input type="text" [(ngModel)]="eventData.name" name="name" placeholder="name" required #name="ngModel"
-					[class.field-error]="form.submitted && name.invalid" />
-
-				<input type="text" name="location" [(ngModel)]="eventData.location" placeholder="location" #name="ngModel"
-					[class.field-error]="form.submitted && name.invalid" />
+				<div>
+					<input type="text" [(ngModel)]="eventData.name" name="name" placeholder="name" required #name="ngModel"
+						[class.field-error]="form.submitted && name.invalid" />
+					<p *ngIf="name.invalid && name.touched || form.submitted && name.invalid">Event name is required</p>
+				</div>
+				<div>
+					<input type="text" name="location" [(ngModel)]="eventData.location" placeholder="location" #location="ngModel"
+						required [class.field-error]="form.submitted && location.invalid" />
+					<p *ngIf="location.invalid && location.touched || form.submitted && location.invalid">Location is required</p>
+				</div>
 			</div>
 			<div class="w-100 form-group flex-column d-flex justify-content-between">
-				<label class="text-left" for="start-date"> Start Date
-					<input class="w-100" [(ngModel)]="eventData.start_date" name="start_date" id="start-date" type="date"
-						placeholder="start_date" /></label>
-				<label class="text-left" for="end-date"> End Date<input [(ngModel)]="eventData.end_date" id="end-date"
-						class="w-100" name="end_date" type="date" placeholder="end_date" /></label>
-
+				<div>
+					<label class="text-left" for="start-date"> Start Date
+						<input class="w-100" [(ngModel)]="eventData.start_date" name="start_date" id="start-date" type="date"
+							placeholder="start_date" #startDate="ngModel" required
+							[class.field-error]="form.submitted && startDate.invalid" /></label>
+					<p *ngIf="startDate.invalid && startDate.touched || form.submitted && startDate.invalid">Start date is
+						required
+					</p>
+				</div>
+				<div>
+					<label class="text-left" for="end-date"> End Date<input [(ngModel)]="eventData.end_date" id="end-date"
+							class="w-100" name="end_date" type="date" placeholder="end_date" #endDate="ngModel" required
+							[class.field-error]="form.submitted && endDate.invalid" /></label>
+					<p *ngIf="endDate.invalid && endDate.touched || form.submitted && endDate.invalid">End date is required
+					</p>
+				</div>
 			</div>
 			<textarea maxlength="600" name="description" placeholder="description" [(ngModel)]="eventData.description"
-				class="w-100" rows="3"></textarea>
-			<div class="w-100 req-res d-flex justify-content-center align-items-center flex-column">
+				class="w-100" rows="3" #description="ngModel" required
+				[class.field-error]="form.submitted && description.invalid"></textarea>
+			<p *ngIf="description.invalid && description.touched || form.submitted && description.invalid">Description is
+				required
+			</p>
+			<div [class.async]="loading" class="w-100 req-res d-flex justify-content-center align-items-center flex-column">
 				<button type="submit" class="submit btn green-bg border-none anim ">save</button>
 				<div class="loader"></div>
-				<div class="error-hd"></div>
+				<div *ngIf="errorMsg && !loading" class="error-hd">{{errorMsg}}</div>
 			</div>
 		</form>
 	</div>
