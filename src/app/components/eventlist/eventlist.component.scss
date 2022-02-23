@@ -1,15 +1,20 @@
 :host {
+  flex-direction: column;
+  display: flex;
+  overflow: hidden auto;
   height: 100%;
-	flex-direction: column;
-	display: flex;
-	width: 100%
+  width: 100%;
 }
 main {
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
-  overflow-y: auto;
+  height: 100%;
   width: 100%;
+  overflow-y: hidden;
+  .item-block {
+    overflow-y: auto;
+    height: auto;
+  }
 }
 main .item-con {
   display: flex;
@@ -31,13 +36,13 @@ main.grid .item-con {
   justify-content: flex-start;
   flex-wrap: wrap;
   a {
-    border-radius: .6rem;
+    border-radius: 0.6rem;
   }
 }
 main.grid .list-item {
   display: none;
 }
- main .grid-item {
+main .grid-item {
   display: none;
 }
 main .item {
@@ -164,9 +169,14 @@ main.grid .grid-item .content .location {
 main.grid .grid-item .meta {
   font-size: 0.85rem;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: center;
   text-align: right;
   color: #00aeae;
+}
+main .list-item .meta button {
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
 }
 main.grid .grid-item .content .date {
   font-size: 0.85rem;
@@ -176,6 +186,16 @@ main.grid .grid-item.special {
   background: #ce69a0;
 }
 
+main.grid .grid-item .meta button {
+  padding: 0.5rem 0.7rem;
+  font-size: 0.85rem;
+}
+main.grid .grid-item .meta p {
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 200px;
+}
 @media (min-width: 576px) {
   main .list-item .content {
     flex-direction: row;
@@ -190,7 +210,15 @@ main.grid .grid-item.special {
     width: calc(100% / 2.3);
   }
   main .list-item .content .meta {
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+  main .list-item .meta button {
+    margin-top: 0.5rem;
+  }
+  main .list-item .meta p {
+    white-space: normal;
+    width: auto;
   }
 }
 

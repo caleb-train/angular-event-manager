@@ -8,7 +8,7 @@
 				TYPES</a>
 			<a [routerLink]="['/admin/registrations']" class="link"
 				[class.active]="activeRoute == 'registrations'">REGISTRATIONS</a>
-			<a onclick="window.localStorage.clear()" [routerLink]="['/']" class="link">LOG OUT</a>
+			<a (click)="logout()" class="link">LOG OUT</a>
 		</div>
 	</div>
 </aside>

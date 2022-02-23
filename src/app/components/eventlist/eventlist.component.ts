@@ -1,4 +1,5 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { EventService } from '../../event.service';
 
@@ -12,25 +13,38 @@ export class EventlistComponent implements OnInit, OnChanges {
   errorMsg = ''
   @Input() searchQuery = ''
   events: any[] | undefined
+  isLoggedIn: boolean = false;
   sub!: Subscription;
 
-  constructor(private eventService: EventService) {
+  constructor(private eventService: EventService, private router: Router) {
+
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if(changes?.['searchQuery']?.currentValue){
+    if (changes?.['searchQuery']?.currentValue) {
       this.events = undefined
       this.getEvents(this.searchQuery)
     } else this.getEvents()
   }
 
   ngOnInit(): void {
+    this.isLoggedIn = this.router.url === '/admin/events'
     this.getEvents()
   }
 
   getEvents(q: string = '') {
+    this.events = undefined
     this.sub = this.eventService.getEvents(q).subscribe({
       next: events => this.events = events.data,
+      error: err => this.errorMsg = err
+    })
+  }
+
+  deleteEvent(id: number) {
+    this.sub = this.eventService.deleteEvent(id).subscribe({
+      next: resp => {
+        this.getEvents()
+      },
       error: err => this.errorMsg = err
     })
   }
@@ -61,8 +75,11 @@ export class EventlistComponent implements OnInit, OnChanges {
       "Hackathon",
     ].includes(itm.name))
   }
-  viewDetail(id: any) {
-    window.location.href = `/event/${id}`;
+  viewDetail(event: any, id: number) {
+    if (event.target.nodeName == 'BUTTON') {
+      console.log(event.target.nodeName);
+      this.deleteEvent(id)
+    } else window.location.href = `/event/${id}`;
   }
 
 }

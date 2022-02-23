@@ -1,7 +1,7 @@
 <main class="{{isList ? '' : 'grid'}}">
 	<div class="item-block {{ events ? '' : 'gone'}}">
 		<div class="item-con">
-			<div *ngFor="let item of events" (click)="viewDetail(item.id)"
+			<div *ngFor="let item of events" (click)="viewDetail($event, item.id)"
 				class="item w-100 {{isItemSpecial(item.event_types) ? 'special' : ''}}">
 				<a class="list-item" [routerLink]="['/events', item.id]">
 					<div class="date">
@@ -16,6 +16,7 @@
 						<div class="meta">
 							<p class="event-types" [innerHTML]="formatEventTypes(item.event_types, true)">
 							</p>
+							<button type="button"  *ngIf="isLoggedIn" class="btn red anim remove-event">Delete</button>
 						</div>
 					</div>
 				</a>
@@ -34,6 +35,7 @@
 					<div class="meta">
 						<p class="event-types" [innerHTML]="formatEventTypes(item.event_types)">
 						</p>
+						<button type="button" *ngIf="isLoggedIn" class="btn red anim remove-event">Delete</button>
 					</div>
 				</a>
 			</div>

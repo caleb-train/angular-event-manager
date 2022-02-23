@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationStart, Router } from '@angular/router';
+import { EventService } from '../event.service';
 
 @Component({
   selector: 'app-admin',
@@ -11,7 +12,7 @@ export class AdminComponent implements OnInit {
   activeRoute: string = '';
   isAppDrawerOpen: boolean = false;
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private eventService: EventService) {
     this.events = this.router.events.subscribe((event) => {
       if (event instanceof NavigationStart) {
         this.activeRoute = this.setRoute(event.url)
@@ -21,6 +22,11 @@ export class AdminComponent implements OnInit {
 
   ngOnInit(): void {
     this.activeRoute = this.setRoute(this.router.url)
+  }
+
+  logout(): void {
+    this.eventService.logout()
+    window.location.href = '/admin-login'
   }
 
   setRoute(url: string): string {

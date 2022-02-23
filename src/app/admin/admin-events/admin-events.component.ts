@@ -32,6 +32,7 @@ export class AdminEventsComponent {
   }
 
   onSubmit(form: NgForm) {
+    if(!form.valid) return
     this.loading = true;
     const sub = this.eventService.createEvent({ ...this.eventData, start_date: new Date(this.eventData.start_date).toISOString(), end_date: new Date(this.eventData.end_date).toISOString() }).subscribe({
       next: auth => {
@@ -41,9 +42,9 @@ export class AdminEventsComponent {
         this.child.getEvents('')
       },
       error: err => {
+        this.loading = false
         console.log('error', err?.error)
         this.errorMsg = err?.error?.error ?? err?.error?.message
-        this.loading = false
       },
     });
   }
