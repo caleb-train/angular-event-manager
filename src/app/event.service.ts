@@ -23,6 +23,15 @@ export class EventService {
     return this.http.get<IResp<IEvt[]>>(`${this.eventService}/api/event/registration${q ? `?email=${q}` : ''}`).pipe(tap(data => data), catchError(this.handleError))
   }
 
+  deleteEvent(id: number): Observable<IResp<number>> {
+    return this.http.delete<IResp<number>>(`${this.eventService}/api/events${id ? `?id=${id}` : ''}`, {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${this.currentUser?.token}`,
+      }
+    }).pipe(tap(data => data), catchError(this.handleError))
+  }
+
   getEventTypes(q: string) {
     return this.http.get<IResp<IEvtTypes[]>>(`${this.eventService}/api/event-types`, {
       headers: {
@@ -52,6 +61,12 @@ export class EventService {
   saveUser(user: IAuth) {
     localStorage.setItem('admin', JSON.stringify(user))
     this.hydrate()
+  }
+
+  logout() {
+    localStorage.removeItem('admin')
+    this.isLoggedIn = false
+    this.currentUser = undefined
   }
 
   hydrate() {
