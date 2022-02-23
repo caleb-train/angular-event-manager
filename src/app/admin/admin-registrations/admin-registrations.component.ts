@@ -26,7 +26,6 @@ export class AdminRegistrationsComponent implements OnInit {
 
   OnChanges(newValue: string): void {
     this.searchQuery = newValue
-    console.log(newValue)
     if (newValue) {
       this.registrations = undefined
       this.getRegistration(newValue)

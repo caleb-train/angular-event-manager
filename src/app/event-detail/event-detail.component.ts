@@ -26,7 +26,6 @@ export class EventDetailComponent implements OnInit {
       next: event => this.event = event.data,
       error: err => this.errorMsg = err
     })
-    console.log(this.event)
   }
 
   getEventTypes() {
@@ -36,7 +35,6 @@ export class EventDetailComponent implements OnInit {
   getSpeakers() {
     return this.event?.speakers?.map(
       (speaker) => {
-        console.log(speaker)
         return `
     <div class="speaker">
         <div class="dp" style="background-size: cover; background-image: url(${speaker.pic})"></div>
