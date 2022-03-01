@@ -81,5 +81,4 @@ export class EventlistComponent implements OnInit, OnChanges {
       this.deleteEvent(id)
     } else window.location.href = `/event/${id}`;
   }
-
 }

@@ -32,6 +32,15 @@ export class EventService {
     }).pipe(tap(data => data), catchError(this.handleError))
   }
 
+  deleteEventType(id: number): Observable<IResp<number>> {
+    return this.http.delete<IResp<number>>(`${this.eventService}/api/event-types${id ? `?id=${id}` : ''}`, {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${this.currentUser?.token}`,
+      }
+    }).pipe(tap(data => data), catchError(this.handleError))
+  }
+
   getEventTypes(q: string) {
     return this.http.get<IResp<IEvtTypes[]>>(`${this.eventService}/api/event-types`, {
       headers: {
@@ -47,6 +56,15 @@ export class EventService {
 
   createEvent(evtData: INewEvt): Observable<IResp<any>> {
     return this.http.post<IResp<IAuth>>(`${this.eventService}/api/events`, evtData, {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${this.currentUser?.token}`,
+      },
+    })
+  }
+
+  createEventType(eventType: IEvtTypes): Observable<IResp<any>> {
+    return this.http.post<IResp<IAuth>>(`${this.eventService}/api/event-types`, eventType, {
       headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${this.currentUser?.token}`,
