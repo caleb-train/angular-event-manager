@@ -28,10 +28,10 @@ export interface IEvt {
 }
 
 export interface IEvtTypes {
-	id: number;
+	id?: number;
 	name: string;
-	created_at: string;
-	admin_id: string;
+	created_at?: string;
+	admin_id?: string;
 }
 
 export interface INewEvt {
