@@ -1,6 +1,6 @@
 {
   "/api/": {
-    "target": "http://localhost:3210",
+    "target": "https://event-manager-node.herokuapp.com/",
     "secure": false,
     "changeOrigin": true
   }

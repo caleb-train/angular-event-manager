@@ -15,7 +15,8 @@ import { EventDetailComponent } from './event-detail/event-detail.component';
 import { EventregistrationComponent } from './eventregistration/eventregistration.component';
 import { EventsComponent } from './events/events.component';
 import { AdminRegistrationsComponent } from './admin/admin-registrations/admin-registrations.component';
-
+import { StoreModule } from '@ngrx/store';
+import reducers from './state/reducers';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,7 @@ import { AdminRegistrationsComponent } from './admin/admin-registrations/admin-r
     AdminEventsComponent,
     AdminComponent,
     AdminEventTypesComponent,
-    AdminRegistrationsComponent
+    AdminRegistrationsComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,7 +43,7 @@ import { AdminRegistrationsComponent } from './admin/admin-registrations/admin-r
           {
             path: '',
             redirectTo: 'events',
-            pathMatch: 'full'
+            pathMatch: 'full',
           },
           {
             path: 'events',
@@ -56,18 +57,23 @@ import { AdminRegistrationsComponent } from './admin/admin-registrations/admin-r
             path: 'registrations',
             component: AdminRegistrationsComponent,
           },
-        ]
+        ],
       },
-      { path: 'admin-login', component: AdminLoginComponent, canActivate: [PublicGuard] },
+      {
+        path: 'admin-login',
+        component: AdminLoginComponent,
+        canActivate: [PublicGuard],
+      },
       { path: 'events/:id', component: EventDetailComponent },
       { path: 'events', component: EventsComponent },
       { path: '', component: EventsComponent },
       { path: '**', redirectTo: '', pathMatch: 'full' },
     ]),
     HttpClientModule,
-    FormsModule
+    StoreModule.forRoot(reducers, {}),
+    FormsModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
