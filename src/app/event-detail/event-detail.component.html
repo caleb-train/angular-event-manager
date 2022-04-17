@@ -11,7 +11,7 @@
 			<h5>{{event?.location}}</h5>
 		</div>
 		<div class="bottom d-flex justify-content-center align-items-center">
-			<button id="register" (click)="openModal = true"  class="btn white anim">Register</button>
+			<button id="register" (click)="openModal()"  class="btn white anim">Register</button>
 		</div>
 	</div>
 </nav>
@@ -42,11 +42,11 @@
 		<div class="loader"></div>
 	</div>
 </main>
-<div id="modal" [class.close]="!openModal">
-	<div id="modal-bg" (click)="openModal = false"></div>
+<div id="modal" [class.close]="modalType == 'none'">
+	<div id="modal-bg" (click)="modalType = 'none'"></div>
 	<div id="modal-dialog">
-		<div class="modal-close-btn close-icon pointer" (click)="openModal = false">&timesd;</div>
-		<form class="modal-register" autocomplete="off" #form="ngForm" (ngSubmit)="onSubmit(form)">
+		<div class="modal-close-btn close-icon pointer" (click)="modalType = 'none'">&timesd;</div>
+		<form class="modal-register" [class.gone]="modalType == 'modal'" autocomplete="off" #form="ngForm" (ngSubmit)="onSubmit(form)">
 			<h1>REGISTER</h1>
 			<input type="text" [(ngModel)]="formData.name" name="name" placeholder="name" #name="ngModel"	[class.field-error]="form.submitted && name.invalid"/>
       <p *ngIf="name.invalid && name.touched || form.submitted && name.invalid">Your name is required</p>
@@ -58,6 +58,12 @@
 				<div class="loader"></div>
 				<div *ngIf="errorMsg && !loading" class="error-hd">{{errorMsg}}</div>
 			</div>
+		</form>
+
+		<form class="modal-premium text-center gone" [class.gone]="modalType == 'form'">
+			<img width="120px" src="../../assets/images/warning.svg" />
+			<h1>Premium-only webinar registration is available to only members</h1>
+			<a href="/premium-membership.html" class="btn green-bg border-none anim">Read more</a>
 		</form>
 	</div>
 </div>

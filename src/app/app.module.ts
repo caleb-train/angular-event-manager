@@ -12,7 +12,6 @@ import { AppComponent } from './app.component';
 import { EventlistComponent } from './components/eventlist/eventlist.component';
 import { LogoComponent } from './components/logo/logo.component';
 import { EventDetailComponent } from './event-detail/event-detail.component';
-import { EventregistrationComponent } from './eventregistration/eventregistration.component';
 import { EventsComponent } from './events/events.component';
 import { AdminRegistrationsComponent } from './admin/admin-registrations/admin-registrations.component';
 import { StoreModule } from '@ngrx/store';
@@ -22,7 +21,6 @@ import reducers from './state/reducers';
   declarations: [
     AppComponent,
     EventlistComponent,
-    EventregistrationComponent,
     EventDetailComponent,
     EventsComponent,
     AdminLoginComponent,

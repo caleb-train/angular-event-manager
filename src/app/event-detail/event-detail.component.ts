@@ -14,7 +14,7 @@ export class EventDetailComponent implements OnInit {
   sub: Subscription | undefined;
   event: IEvt | undefined;
   errorMsg: any;
-  openModal = false;
+  modalType: 'none' | 'form' | 'modal' = 'none';
   loading = false;
   eventId: number = 0;
 
@@ -36,6 +36,14 @@ export class EventDetailComponent implements OnInit {
       this.getProduct(+id);
       this.eventId = +id;
     }
+  }
+
+  openModal() {
+    this.modalType = this.event?.event_types?.find(
+      (itm) => itm.name == 'Premium-only Webinar'
+    )
+      ? 'form'
+      : 'modal';
   }
 
   getProduct(id: number) {
@@ -78,7 +86,7 @@ export class EventDetailComponent implements OnInit {
         next: (auth) => {
           this.loading = false;
           this.errorMsg = null;
-          this.openModal = false;
+          this.modalType = 'none';
         },
         error: (err) => {
           this.loading = false;
