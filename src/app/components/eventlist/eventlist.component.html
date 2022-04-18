@@ -16,7 +16,7 @@
 						<div class="meta">
 							<p class="event-types" [innerHTML]="formatEventTypes(item.event_types, true)">
 							</p>
-							<button type="button"  *ngIf="isLoggedIn" class="btn red anim remove-event">Delete</button>
+							<button type="button"  *ngIf="currentUser" class="btn red anim remove-event">Delete</button>
 						</div>
 					</div>
 				</a>
@@ -35,7 +35,7 @@
 					<div class="meta">
 						<p class="event-types" [innerHTML]="formatEventTypes(item.event_types)">
 						</p>
-						<button type="button" *ngIf="isLoggedIn" class="btn red anim remove-event">Delete</button>
+						<button type="button" *ngIf="currentUser" class="btn red anim remove-event">Delete</button>
 					</div>
 				</a>
 			</div>

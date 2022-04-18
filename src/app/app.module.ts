@@ -16,6 +16,8 @@ import { EventsComponent } from './events/events.component';
 import { AdminRegistrationsComponent } from './admin/admin-registrations/admin-registrations.component';
 import { StoreModule } from '@ngrx/store';
 import reducers from './state/reducers';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -70,6 +72,7 @@ import reducers from './state/reducers';
     HttpClientModule,
     StoreModule.forRoot(reducers, {}),
     FormsModule,
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -8,7 +8,7 @@ import {
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
-import { IEvt } from 'src/app/models.interface';
+import { IAuth, IEvt } from 'src/app/models.interface';
 import * as EventActions from 'src/app/state/actions/event.action';
 import { IAppState } from 'src/app/state/reducers';
 import { EventService } from '../../event.service';
@@ -23,12 +23,11 @@ export class EventlistComponent implements OnInit, OnChanges {
   errorMsg = '';
   @Input() searchQuery = '';
   events: any[] | undefined;
-  isLoggedIn: boolean = false;
+  currentUser: IAuth | null = null;
   sub!: Subscription;
 
   constructor(
     private eventService: EventService,
-    private router: Router,
     private store: Store<IAppState>
   ) {}
 
@@ -40,7 +39,9 @@ export class EventlistComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    this.isLoggedIn = this.router.url === '/admin/events';
+    this.store.select('authState').subscribe((auth) => {
+      this.currentUser = auth.currentUser;
+    });
     this.getEvents();
     this.store.select('eventState').subscribe((evtState) => {
       this.events = evtState.events;
