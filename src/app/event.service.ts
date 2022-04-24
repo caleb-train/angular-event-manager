@@ -126,6 +126,19 @@ export class EventService {
     );
   }
 
+  editEvent(editData: INewEvt, id: number): Observable<IResp<any>> {
+    return this.http.patch<IResp<any>>(
+      `${this.eventService}/api/events?id=${id}`,
+      editData,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this.currentUser?.token}`,
+        },
+      }
+    );
+  }
+
   createEventType(eventType: IEvtTypes): Observable<IResp<any>> {
     return this.http.post<IResp<IAuth>>(
       `${this.eventService}/api/event-types`,

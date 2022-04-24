@@ -3,10 +3,10 @@
 	<div class="app-con">
 		<div class="back-arrows"></div>
 		<div id="links">
-			<a [routerLink]="['/admin/events']" class="link" >EVENTS</a>
-			<a [routerLink]="['/admin/event-types']" class="link">EVENTS
+			<a [routerLink]="['/admin/events']" class="link" [class.active]="route == 'events'">EVENTS</a>
+			<a [routerLink]="['/admin/event-types']" class="link" [class.active]="route == 'event-types'">EVENTS
 				TYPES</a>
-			<a [routerLink]="['/admin/registrations']" class="link">REGISTRATIONS</a>
+			<a [routerLink]="['/admin/registrations']" [class.active]="route == 'registrations'" class="link">REGISTRATIONS</a>
 			<a (click)="logout()" class="link">LOG OUT</a>
 		</div>
 	</div>

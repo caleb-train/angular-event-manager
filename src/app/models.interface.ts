@@ -13,18 +13,21 @@ export interface IEvt {
   id: number;
   name: string;
   location: string;
-  speakers: {
-    name: string;
-    desc: string;
-    pic: string;
-  }[];
+  speakers: IEvtSpeaker[];
   description: string;
-  start_date: string;
-  end_date: string;
-  event_types?: {
-    id: number;
-    name: string;
-  }[];
+  start_date: string | Date;
+  end_date: string | Date;
+  event_types?: IEvtType[];
+}
+
+export interface IEvtSpeaker {
+  name: string;
+  desc: string;
+  pic?: string;
+}
+export interface IEvtType {
+  id?: number;
+  name: string;
 }
 
 export interface IRegisterEvt {
@@ -43,8 +46,8 @@ export interface IEvtTypes {
 export interface INewEvt {
   name: string;
   location: string;
-  start_date: string;
-  end_date: string;
+  start_date: string | Date;
+  end_date: string | Date;
   description: string;
 }
 

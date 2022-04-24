@@ -12,6 +12,7 @@ import { IAppState } from '../state/reducers';
 export class AdminComponent implements OnInit {
   events: any;
   isAppDrawerOpen: boolean = false;
+  route: string = 'events';
 
   constructor(
     private router: Router,
@@ -24,7 +25,14 @@ export class AdminComponent implements OnInit {
     this.store.select('authState').subscribe((authState) => {
       if (!authState.currentUser) this.router.navigate(['/admin-login']);
     });
-    console.log(this.activeRoute);
+
+    this.events = this.router.events.subscribe((event) => {
+      if (event instanceof NavigationStart) {
+        console.log(event.url);
+        const events = event.url.split('/');
+        this.route = events[events.length - 1];
+      }
+    });
   }
 
   logout(): void {

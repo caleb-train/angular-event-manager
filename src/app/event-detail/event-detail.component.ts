@@ -33,7 +33,7 @@ export class EventDetailComponent implements OnInit {
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
-      this.getProduct(+id);
+      this.getEvent(+id);
       this.eventId = +id;
     }
   }
@@ -46,7 +46,7 @@ export class EventDetailComponent implements OnInit {
       : 'modal';
   }
 
-  getProduct(id: number) {
+  getEvent(id: number) {
     this.sub = this.eventService.getEvent(id).subscribe({
       next: (event) => (this.event = event.data),
       error: (err) => (this.errorMsg = err),
