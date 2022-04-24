@@ -1,5 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { catchError, Observable, tap, throwError } from 'rxjs';
 import {
   IAuth,
@@ -10,16 +11,19 @@ import {
   IResp,
   IRegisterEvt,
 } from './models.interface';
+import { LoginAction, LogoutAction } from './state/actions/auth.action';
+import { IAppState } from './state/reducers';
 
 @Injectable({
   providedIn: 'root',
 })
 export class EventService {
   private eventService = '';
-  currentUser: IAuth | undefined;
-  isLoggedIn: boolean = false;
+  currentUser: IAuth | null = null;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private store: Store<IAppState>) {
+    this.hydrate();
+  }
 
   getEvents(q: string = ''): Observable<IResp<IEvt[]>> {
     return this.http
@@ -122,6 +126,19 @@ export class EventService {
     );
   }
 
+  editEvent(editData: INewEvt, id: number): Observable<IResp<any>> {
+    return this.http.patch<IResp<any>>(
+      `${this.eventService}/api/events?id=${id}`,
+      editData,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this.currentUser?.token}`,
+        },
+      }
+    );
+  }
+
   createEventType(eventType: IEvtTypes): Observable<IResp<any>> {
     return this.http.post<IResp<IAuth>>(
       `${this.eventService}/api/event-types`,
@@ -146,21 +163,24 @@ export class EventService {
 
   saveUser(user: IAuth) {
     localStorage.setItem('admin', JSON.stringify(user));
+    this.currentUser = user;
     this.hydrate();
   }
 
   logout() {
     localStorage.removeItem('admin');
-    this.isLoggedIn = false;
-    this.currentUser = undefined;
+    this.currentUser = null;
+    this.store.dispatch(LogoutAction());
   }
 
   hydrate() {
-    const admin = localStorage.getItem('admin');
-    if (admin) {
-      this.currentUser = JSON.parse(admin) as IAuth;
-      this.isLoggedIn = true;
-    }
+    let user;
+    if (!this.currentUser) {
+      const admin = localStorage.getItem('admin');
+      user = admin ? (JSON.parse(admin) as IAuth) : null;
+      this.currentUser = user;
+    } else user = this.currentUser;
+    this.store.dispatch(LoginAction({ user }));
   }
 
   private handleError(err: HttpErrorResponse) {

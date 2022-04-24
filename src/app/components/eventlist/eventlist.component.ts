@@ -5,10 +5,10 @@ import {
   OnInit,
   SimpleChanges,
 } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
-import { IEvt } from 'src/app/models.interface';
+import { IAuth, IEvt } from 'src/app/models.interface';
 import * as EventActions from 'src/app/state/actions/event.action';
 import { IAppState } from 'src/app/state/reducers';
 import { EventService } from '../../event.service';
@@ -23,12 +23,13 @@ export class EventlistComponent implements OnInit, OnChanges {
   errorMsg = '';
   @Input() searchQuery = '';
   events: any[] | undefined;
-  isLoggedIn: boolean = false;
+  currentUser: IAuth | null = null;
   sub!: Subscription;
 
   constructor(
-    private eventService: EventService,
     private router: Router,
+    private route: ActivatedRoute,
+    private eventService: EventService,
     private store: Store<IAppState>
   ) {}
 
@@ -36,11 +37,13 @@ export class EventlistComponent implements OnInit, OnChanges {
     if (changes?.['searchQuery']?.currentValue) {
       this.events = undefined;
       this.getEvents(this.searchQuery);
-    } else this.getEvents();
+    } else if (changes?.['searchQuery']?.previousValue) this.getEvents();
   }
 
   ngOnInit(): void {
-    this.isLoggedIn = this.router.url === '/admin/events';
+    this.store.select('authState').subscribe((auth) => {
+      this.currentUser = auth.currentUser;
+    });
     this.getEvents();
     this.store.select('eventState').subscribe((evtState) => {
       this.events = evtState.events;
@@ -99,6 +102,13 @@ export class EventlistComponent implements OnInit, OnChanges {
     if (event.target.nodeName == 'BUTTON') {
       console.log(event.target.nodeName);
       this.deleteEvent(id);
-    } else window.location.href = `/event/${id}`;
+    } else {
+      if (this.currentUser == null) {
+        this.router.navigate([`/events`, id]);
+      } else {
+        console.log('asddd');
+        this.router.navigate([`/admin/events`, id]);
+      }
+    }
   }
 }

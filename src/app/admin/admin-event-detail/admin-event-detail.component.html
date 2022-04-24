@@ -1,0 +1,117 @@
+<nav>
+  <div class="header-nav admin">
+      <div class="header d-flex justify-content-between align-items-center">
+          <app-logo></app-logo>
+          <div class="date-con d-flex justify-content-between align-items-center">
+            <div class="date">{{ event?.start_date | date: 'dd MMM yyyy'}}</div>
+          </div>
+      </div>
+      <div class="middle">
+        <h1>{{event?.name}}</h1>
+        <h5>{{event?.location}}</h5>
+      </div>
+      <div class="bottom d-flex w-100 mx-auto justify-content-center align-items-center">
+          <button id="edit-event" (click)="toggleModal('edit-event')" class="btn white anim">Edit</button>
+      </div>
+  </div>
+</nav>
+<main>
+  <div class="item-block  {{ !event ? 'gone': ''}}">
+      <div class="item-con">
+          <p>{{event?.description}}</p>
+          <div class="event-types-con w-100">
+              <div class="d-flex justify-content-center align-items-center">
+                  <button id="edit-event-type" class="btn green anim">Add Event type</button>
+              </div>
+              <div class="types">
+                <div class="event-types">
+                  <div data-id="${item.id}" class="chip pointer" *ngFor="let item of event?.event_types">{{item.name}}&nbsp;&nbsp;&times;</div>
+                </div>
+              </div>
+          </div>
+          <div class="d-flex justify-content-center align-items-center">
+              <button id="edit-speaker" class="btn green anim">Add Speaker</button>
+          </div>
+          <div class="speakers d-flex flex-column text-center align-items-center w-100">
+            <!-- Todo -->
+            <div class="speaker-list">
+              <div class="speaker" *ngFor="let item of event?.speakers">
+                <div class="dp" style="background-size: cover; background-image: url({{item.pic}})">
+                  <div data-name="${speaker.name}" class="remove-icon">&times;</div>
+                </div>
+                <div class="details">
+                    <h6>{{item.name}}</h6>
+                    <span>{{item.desc}}</span>
+                </div>
+              </div>
+            </div>
+            <!-- Todo -->
+          </div>
+      </div>
+  </div>
+  <div class="loader-con flex-grow d-flex justify-content-center align-items-center {{ event ? 'gone': ''}}">
+      <div class="loader"></div>
+  </div>
+</main>
+
+<div id="modal" [class.close]="!isModalOpen()" class="{{isModalOpen()}}">
+  <div id="modal-bg" (click)="toggleModal('')"></div>
+  <div id="modal-dialog">
+      <div class="modal-close-btn close-icon pointer" (click)="toggleModal('')">&timesd;</div>
+      <form class="text-center modal-event d-flex flex-column align-items-center w-100 mx-auto" autocomplete="off" #form="ngForm" (ngSubmit)="editEventContent(form)">
+          <h1>EDIT EVENT</h1>
+          <div class="w-100 form-group flex-column d-flex justify-content-between">
+              <input type="text" name="name" placeholder="name" [(ngModel)]="evtFormData.name" required #name="ngModel" />
+              <input type="text" name="location" placeholder="location" required [(ngModel)]="evtFormData.location"  #location="ngModel" />
+          </div>
+          <div class="w-100 form-group flex-column d-flex justify-content-between">
+              <label class="text-left" for="start-date"> Start Date
+                  <input class="w-100" name="start_date" id="start-date" type="date"
+                      placeholder="start_date" [(ngModel)]="evtFormData.start_date"  #start_date="ngModel" /></label>
+              <label class="text-left" for="start-date"> End Date<input class="w-100" name="end_date" w-100 [(ngModel)]="evtFormData.end_date"  #end_date="ngModel"
+                      type="date" placeholder="end_date" /></label>
+
+          </div>
+          <textarea maxlength="600"  [(ngModel)]="evtFormData.description"  #description="ngModel" name="description" placeholder="description" class="w-100"
+              rows="3"></textarea>
+          <div [class.async]="loading" id="event-req-res"
+              class="w-100 req-res d-flex justify-content-center align-items-center flex-column">
+              <button type="submit" class="submit btn green-bg border-none anim ">save</button>
+              <div class="loader"></div>
+              <div *ngIf="errorMsg && !loading" class="error-hd">{{errorMsg}}</div>
+          </div>
+      </form>
+      <!-- <form class="modal-speaker flex-column align-items-center w-100 mx-auto">
+          <h1>ADD SPEAKERS</h1>
+          <div class="form-group w-100">
+              <input type="text" style="width: 100%;" name="name" placeholder="name" />
+          </div>
+
+          <div class="form-group w-100">
+              <input type="text" style="width: 100%;" name="desc" placeholder="job title" />
+          </div>
+
+          <div id="speakers-req-res"
+              class="w-100 req-res d-flex justify-content-center align-items-center flex-column">
+              <button type="submit" class="submit btn green-bg border-none anim ">save</button>
+              <div class="loader"></div>
+              <div class="error-hd"></div>
+          </div>
+      </form>
+      <form class="text-center modal-event-type flex-column align-items-center w-100 mx-auto">
+          <h1>ADD EVENT TYPES</h1>
+          <div class="form-group w-100">
+              <label class="text-center w-100 d-block" style="width: 100%;" for="event-type">Event types<select
+                      class="w-100" id="event-type" name="event-types">
+                      <option value="Meetup">Meetup</option>
+                  </select></label>
+          </div>
+          <div id="event-type-req-res"
+              class="w-100 req-res d-flex justify-content-center align-items-center flex-column">
+              <button type="submit" class="submit btn green-bg border-none anim ">save</button>
+              <div class="loader"></div>
+              <div class="error-hd"></div>
+          </div>
+      </form> -->
+  </div>
+</div>

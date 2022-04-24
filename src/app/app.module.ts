@@ -16,6 +16,9 @@ import { EventsComponent } from './events/events.component';
 import { AdminRegistrationsComponent } from './admin/admin-registrations/admin-registrations.component';
 import { StoreModule } from '@ngrx/store';
 import reducers from './state/reducers';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
+import { AdminEventDetailComponent } from './admin/admin-event-detail/admin-event-detail.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +32,7 @@ import reducers from './state/reducers';
     AdminComponent,
     AdminEventTypesComponent,
     AdminRegistrationsComponent,
+    AdminEventDetailComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,6 +46,10 @@ import reducers from './state/reducers';
             path: '',
             redirectTo: 'events',
             pathMatch: 'full',
+          },
+          {
+            path: 'events/:id',
+            component: AdminEventDetailComponent,
           },
           {
             path: 'events',
@@ -70,6 +78,10 @@ import reducers from './state/reducers';
     HttpClientModule,
     StoreModule.forRoot(reducers, {}),
     FormsModule,
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+      logOnly: environment.production,
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent],
