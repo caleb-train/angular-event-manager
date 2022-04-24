@@ -5,7 +5,7 @@ import {
   OnInit,
   SimpleChanges,
 } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { IAuth, IEvt } from 'src/app/models.interface';
@@ -27,6 +27,8 @@ export class EventlistComponent implements OnInit, OnChanges {
   sub!: Subscription;
 
   constructor(
+    private router: Router,
+    private route: ActivatedRoute,
     private eventService: EventService,
     private store: Store<IAppState>
   ) {}
@@ -35,7 +37,7 @@ export class EventlistComponent implements OnInit, OnChanges {
     if (changes?.['searchQuery']?.currentValue) {
       this.events = undefined;
       this.getEvents(this.searchQuery);
-    } else this.getEvents();
+    } else if (changes?.['searchQuery']?.previousValue) this.getEvents();
   }
 
   ngOnInit(): void {
@@ -100,6 +102,13 @@ export class EventlistComponent implements OnInit, OnChanges {
     if (event.target.nodeName == 'BUTTON') {
       console.log(event.target.nodeName);
       this.deleteEvent(id);
-    } else window.location.href = `/event/${id}`;
+    } else {
+      if (this.currentUser == null) {
+        this.router.navigate([`/events`, id]);
+      } else {
+        console.log('asddd');
+        this.router.navigate([`/admin/events`, id]);
+      }
+    }
   }
 }

@@ -11,43 +11,23 @@ import { IAppState } from '../state/reducers';
 })
 export class AdminComponent implements OnInit {
   events: any;
-  activeRoute: string = '';
   isAppDrawerOpen: boolean = false;
 
   constructor(
     private router: Router,
-    private activatedRoute: ActivatedRoute,
+    private activeRoute: ActivatedRoute,
     private store: Store<IAppState>,
     private eventService: EventService
   ) {}
 
   ngOnInit(): void {
     this.store.select('authState').subscribe((authState) => {
-      if (!authState.currentUser) window.location.href = '/admin-login';
+      if (!authState.currentUser) this.router.navigate(['/admin-login']);
     });
-    this.events = this.router.events.subscribe((event) => {
-      if (event instanceof NavigationStart) {
-        this.activeRoute = this.setRoute(event.url);
-      }
-    });
-    this.activeRoute = this.setRoute(this.router.url);
+    console.log(this.activeRoute);
   }
 
   logout(): void {
     this.eventService.logout();
-  }
-
-  setRoute(url: string): string {
-    switch (url) {
-      case '/admin/events':
-        return 'events';
-      case '/admin/event-types':
-        return 'event-types';
-      case '/admin/registrations':
-        return 'registrations';
-      default:
-        this.router.navigate(['/admin/events']);
-        return 'events';
-    }
   }
 }
